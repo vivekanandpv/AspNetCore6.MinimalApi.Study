@@ -8,7 +8,12 @@ namespace AspNetCore6.MinimalApi.Study
             var builder = WebApplication.CreateBuilder(args);
             var app = builder.Build();
 
-            app.MapGet("/", () => "Hello World!");
+            //  Terminal middleware use Run()
+            app.Run(async context =>
+            {
+                //  context is the HttpContext, which houses both Request and Response
+                await context.Response.WriteAsync("Hello, world!");
+            });
 
             app.Run();
         }
