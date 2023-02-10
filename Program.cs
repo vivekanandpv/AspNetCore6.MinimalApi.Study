@@ -6,9 +6,15 @@ namespace AspNetCore6.MinimalApi.Study
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            //  Controllers are dependencies for the framework
+            //  They must be configured in the DI container,
+            //  before they can be used
+            builder.Services.AddControllers();
+
             var app = builder.Build();
 
-            app.MapGet("/", () => "Hello World!");
+            //  Attach controllers as the middleware
+            app.MapControllers();
 
             app.Run();
         }
