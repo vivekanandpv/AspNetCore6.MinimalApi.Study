@@ -1,3 +1,5 @@
+using AspNetCore6.MinimalApi.Study.Middleware;
+
 namespace AspNetCore6.MinimalApi.Study
 {
     public class Program
@@ -11,19 +13,7 @@ namespace AspNetCore6.MinimalApi.Study
             //  Please refer to: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/index/_static/request-delegate-pipeline.png?view=aspnetcore-7.0
 
             //  Non-terminal middleware use Use()
-            app.Use(async (context, next) =>
-            {
-                Console.WriteLine("MW1: Pre Next");
-                await next.Invoke();
-                Console.WriteLine("MW1: Post Next");
-            });
-
-            app.Use(async (context, next) =>
-            {
-                Console.WriteLine("MW2: Pre Next");
-                await next.Invoke();
-                Console.WriteLine("MW2: Post Next");
-            });
+            app.UseMiddleware<LoggerMiddleware>();
 
             //  Terminal middleware use Run()
             app.Run(async context =>
