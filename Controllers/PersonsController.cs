@@ -3,20 +3,31 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCore6.MinimalApi.Study.Controllers
 {
-    //  This is the controller request path
-    //  It's a good practice to version the APIs
-    //  in the route template, [controller] means
-    //  the name of the controller except Controller suffix (persons in the case)
     [Route("api/v1/[controller]")]
-    [ApiController] //  This provides automatic serialization of objects as Json
+    [ApiController]
     public class PersonsController : ControllerBase
     {
-        //  controller has action methods
-        [Route("foo")]  //  additional path for the action method (api/v1/persons/foo)
-        [HttpGet]   //  Responds for HttpGet
+        //  These tricks work, but are not recommended as they create unreasonable codebase
+        //  Only for understanding purpose
+
+        //  It is possible to use one action method with multiple routes
+        //  But a route cannot have more than one action method (causes exception)
+        [Route("bar")]
+        [Route("foo")]
+        [HttpGet("baz")]   //  Responds for HttpGet for bar, foo, and baz
         public IActionResult Get()
         {
             return Ok(new { Name = "John Doe" });
+        }
+
+        //  It is possible to create one action method which accepts multiple http methods
+        //  methods are case insensitive
+        //  can have non-standard methods!
+        [Route("wild-card")]
+        [AcceptVerbs("get", "post", "delete", "FOO")]  
+        public IActionResult WildMethod()
+        {
+            return Ok(new { Message = "That was ok!" });
         }
     }
 }
