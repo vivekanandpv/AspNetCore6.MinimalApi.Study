@@ -5,8 +5,9 @@ namespace AspNetCore6.MinimalApi.Study
         //  Primary documentation: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-7.0
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
-            var app = builder.Build();
+            //  though not recommended, it is possible to create
+            //  the application directly without the builder
+            var app = WebApplication.Create(args);
 
             app.MapGet("/", () => "Hello World!");
 
